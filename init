@@ -8,7 +8,7 @@ rescue_shell()
         *rd.auth*)
             echo "Dropping you to a shell."
             busybox --install -s
-            exec /bin/sh
+            exec cttyhack ash
             ;;
         *)
             echo "Enable kernel option rd.auth to get shell access."
