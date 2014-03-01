@@ -1,0 +1,43 @@
+#!/bin/busybox ash
+
+rescue_shell()
+{
+    echo "$@"
+
+    case "$(cat /proc/cmdline)" in
+        *rd.auth*)
+            echo "Dropping you to a shell."
+            busybox --install -s
+            exec /bin/sh
+            ;;
+        *)
+            echo "Enable kernel option rd.auth to get shell access."
+	    read
+            exit
+            ;;
+        esac
+
+}
+
+
+# temporarily mount proc and sys
+mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t devtmpfs none /dev
+
+# mounting rootfs on /mnt/root
+/sbin/cryptsetup open $(findfs UUID=9221b894-b7c0-4371-9e42-7a6665031461) luks-root     || rescue_shell "cryptsetup open failed."
+/sbin/lvm vgscan                                                                        || rescue_shell "lvm vgscan failed."
+/sbin/lvm vgchange --sysinit -ay vg1                                                    || rescue_shell "lvm vgchange failed."
+/sbin/lvm vgscan --mknodes                                                              || rescue_shell "lvm vgscan --mknodes failed."
+mount -o ro -t ext4 /dev/mapper/vg1-root /mnt/root                                      || rescue_shell "mount root failed."
+
+echo "Switching to real root."
+
+# clean up (the init process will remount these later)
+umount /proc
+umount /sys
+umount /dev
+
+# switch to the real root and execute init
+exec switch_root /mnt/root /sbin/init
