@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec ./gen_initramfs_list.sh -o initramfs.img initramfs_list
