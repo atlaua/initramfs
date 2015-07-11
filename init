@@ -12,7 +12,7 @@ rescue_shell()
             ;;
         *)
             echo "Enable kernel option rd.auth to get shell access."
-	    read
+            read
             exit
             ;;
         esac
