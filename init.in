@@ -26,11 +26,11 @@ mount -t sysfs none /sys
 mount -t devtmpfs none /dev
 
 # mounting rootfs on /mnt/root
-/sbin/cryptsetup open $(findfs UUID=<uuid>) luks-root                                   || rescue_shell "cryptsetup open failed."
+/sbin/cryptsetup open $(findfs UUID=<luks_uuid>) luks-root                              || rescue_shell "cryptsetup open failed."
 /sbin/lvm vgscan                                                                        || rescue_shell "lvm vgscan failed."
 /sbin/lvm vgchange --sysinit -ay vg1                                                    || rescue_shell "lvm vgchange failed."
 /sbin/lvm vgscan --mknodes                                                              || rescue_shell "lvm vgscan --mknodes failed."
-mount -o ro -t ext4 /dev/mapper/vg1-root /mnt/root                                      || rescue_shell "mount root failed."
+mount -o ro -t <rootfs> /dev/mapper/vg1-root /mnt/root                                  || rescue_shell "mount root failed."
 
 echo "Switching to real root."
 
