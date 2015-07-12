@@ -1,3 +1,6 @@
 #!/bin/bash
 
-exec ./gen_initramfs_list.sh -o initramfs.img list
+uuid=`cat luks_uuid`
+sed "s/<uuid>/${uuid}/" init.in > init
+./gen_initramfs_list.sh -o initramfs.img list
+rm init
