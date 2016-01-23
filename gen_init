@@ -1,4 +1,10 @@
 #!/bin/bash
 
-source vars
-sed "s/<luks_uuid>/${luks_uuid}/;s/<rootfs>/${rootfs}/" init.in > init
+mapfile -t VARS < vars
+
+for i in "${!VARS[@]}"
+do
+    VARS[i]="-D${VARS[i]}"
+done
+
+m4 "${VARS[@]}" init.in > init
