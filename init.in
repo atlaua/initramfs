@@ -5,13 +5,13 @@ rescue_shell()
     echo "$@"
 
     case "$(cat /proc/cmdline)" in
-        *rd.auth*)
+        *rd.shell*)
             echo "Dropping you to a shell."
             busybox --install -s
             exec cttyhack ash
             ;;
         *)
-            echo "Enable kernel option rd.auth to get shell access."
+            echo "Add rd.shell to the kernel cmdline to get shell access."
             read
             exit
             ;;
