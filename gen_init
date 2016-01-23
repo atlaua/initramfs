@@ -2,5 +2,3 @@
 
 source vars
 sed "s/<luks_uuid>/${luks_uuid}/;s/<rootfs>/${rootfs}/" init.in > init
-./gen_initramfs_list.sh -o initramfs.img list
-rm init

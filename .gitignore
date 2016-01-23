@@ -1,2 +1,4 @@
 /initramfs.img*
+/init
+/list
 /vars
