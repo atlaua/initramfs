@@ -1,7 +1,9 @@
 This is a simple initramfs for a LVM on cryptsetup/LUKS setup.
 
 It uses /bin/busybox and obviously /sbin/cryptsetup and /sbin/lvm. The Makefile additionally
-requires the lddtree utility from pax-utils.
+requires the lddtree utility from pax-utils and a linux kernel tree at /usr/src/linux
+(Alternatively, you could copy over scripts/gen_initramfs_list.sh and usr/gen_init_cpio from a
+kernel tree located elswhere.)
 
 ## Usage
 
