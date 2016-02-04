@@ -1,0 +1,18 @@
+This is a simple initramfs for a LVM on cryptsetup/LUKS setup.
+
+It uses /bin/busybox and obviously /sbin/cryptsetup and /sbin/lvm. The Makefile additionally
+requires the lddtree utility from pax-utils.
+
+## Usage
+
+* Adjust the vars file. It should contain something like
+
+    LUKS_UUID=9221b894-b7c0-4371-9e42-7a6665031461
+    ROOTFS=ext4
+
+* $ make
+
+* $ cp initramfs.img /boot
+
+For customization, you can edit the init script init.in. The list of files contained in the
+initramfs is controlled by list.in and the variables on the top of the Makefile.
