@@ -41,3 +41,5 @@ umount /dev
 
 # switch to the real root and execute init
 exec switch_root /mnt/root /sbin/init
+
+# vim: ft=sh
