@@ -5,13 +5,14 @@ rescue_shell()
     echo "$@"
 
     case "$(cat /proc/cmdline)" in
-        *rd.shell*)
+        *rd.rescue*)
             echo "Dropping you to a shell."
             /bin/busybox --install -s
             exec cttyhack ash
             ;;
         *)
-            echo "Add rd.shell to the kernel cmdline to get shell access."
+            echo "Add rd.rescue to the kernel cmdline to get shell access."
+            sleep 60
             read
             exit
             ;;
