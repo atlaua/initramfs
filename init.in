@@ -38,8 +38,9 @@ echo "Switching to real root."
 umount /proc
 umount /sys
 umount /dev
+export -n INIT
 
 # switch to the real root and execute init
-exec switch_root /mnt/root /sbin/init
+exec switch_root /mnt/root "${INIT:-/sbin/init}"
 
 # vim: ft=sh
