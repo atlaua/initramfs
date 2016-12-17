@@ -4,12 +4,15 @@ progs       = /bin/busybox /sbin/cryptsetup /sbin/lvm
 
 
 # list is a phony target because it depends on external data (libraries)
-.PHONY: all clean list
+.PHONY: all clean list install
 
 all: initramfs.img
 
 clean:
 	rm -f initramfs.img init list
+
+install:
+	cp --backup=simple --suffix=.old initramfs.img /boot/
 
 initramfs.img: init list $(extra_files)
 	scripts/gen_initramfs_list.sh -o initramfs.img list
