@@ -22,4 +22,4 @@ init: init.in vars
 
 list: list.in
 	cp list.in list
-	lddtree --list -- $(progs) | sed -e 's:^\(/usr\)\?\(.*\)$$:file \2\t\0\t755 0 0:' >> list
+	lddtree --list -- $(progs) | sort -u | sed -e 's:^\(/usr\)\?\(.*\)$$:file \2\t\0\t755 0 0:' >> list
